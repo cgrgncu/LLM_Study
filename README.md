@@ -10,4 +10,6 @@
 ### 安裝 LM Studio
 + 官方網站: https://lmstudio.ai/
 + 版本: LM-Studio-0.4.25-1-x64.exe
- 
+
+### 測試
++ curl -X GET http://100.80.0.5:1234/v1/models -H "Content-Type: application/json" -H "Authorization: Bearer sk-lm-ymGJE2gr:lScQk8zKVLydJf1QuKw7"
