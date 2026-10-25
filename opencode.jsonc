@@ -1,0 +1,20 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "lmstudio/qwen3.5-9b",
+  "providers": {
+    "lmstudio": {
+      "name": "LM Studio (100.80.0.5)",
+      "package": "@opencode/ai/providers/openai-compatible",
+      "settings": {
+        "baseURL": "http://100.80.0.5:1234/v1",
+        "apiKey": "sk-lm-ymGJE2gr:lScQk8zKVLydJf1QuKw7",
+      },
+      "models": {
+        "qwen3.5-9b": {
+          "modelID": "qwen/qwen3.5-9b",
+          "name": "Qwen 3.5 9B",
+        },
+      },
+    },
+  },
+}
