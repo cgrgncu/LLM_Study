@@ -18,3 +18,7 @@
 ### WorkBuddy
 + 官方網站(國際版): https://www.workbuddy.ai/
 + 輔助工具: https://github.com/baiyea/workbuddy2api-ui
++ 虛擬機練習:
+  + 來自opencode系列VM，轉存為: Win10_WorkBuddy2API_VM1
+  + 變更電腦名稱:「設定」＞「系統」＞「關於」＞「重新命名此電腦（進階）」，電腦名稱改為「WorkBuddy2APIVM1」。
+    + 設定變更電腦名稱後重新啟動電腦。
