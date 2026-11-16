@@ -13,3 +13,8 @@
 
 ### 測試
 + curl -X GET http://100.80.0.5:1234/v1/models -H "Content-Type: application/json" -H "Authorization: Bearer sk-lm-ymGJE2gr:lScQk8zKVLydJf1QuKw7"
+
+
+### WorkBuddy
++ 官方網站(國際版): https://www.workbuddy.ai/
++ 輔助工具: https://github.com/baiyea/workbuddy2api-ui
