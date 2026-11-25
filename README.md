@@ -1,5 +1,11 @@
 # LLM_Study
 
+### 安裝 llama.cpp
++ 官方網站: https://llama.app/
++ 官方Github: https://github.com/ggml-org/llama.cpp
++ 版本: https://github.com/ggml-org/llama.cpp/releases
+
+
 ### 安裝 LM Studio Bionic
 + 官方網站: https://lmstudio.ai/
 + 版本: Bionic-1.1.7-7-x64
