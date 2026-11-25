@@ -5,7 +5,8 @@
 + 官方Github: https://github.com/ggml-org/llama.cpp
 + 版本: https://github.com/ggml-org/llama.cpp/releases
 + 目標模型: https://huggingface.co/unsloth/Inkling-2-Mini-GGUF/blob/main/Inkling-2-Mini-UD-IQ1_M.gguf
-
++ VPN工具: radmin VPN
+  + 官方網站: https://www.radmin-vpn.com/tw/
 ### 安裝 LM Studio Bionic
 + 官方網站: https://lmstudio.ai/
 + 版本: Bionic-1.1.7-7-x64
