@@ -4,7 +4,7 @@
 + 官方網站: https://llama.app/
 + 官方Github: https://github.com/ggml-org/llama.cpp
 + 版本: https://github.com/ggml-org/llama.cpp/releases
-+ 目標模型: https://huggingface.co/ggml-org/Inkling-2-Mini-GGUF
++ 目標模型: https://huggingface.co/unsloth/Inkling-2-Mini-GGUF/blob/main/Inkling-2-Mini-UD-IQ1_M.gguf
 
 ### 安裝 LM Studio Bionic
 + 官方網站: https://lmstudio.ai/
