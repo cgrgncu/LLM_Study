@@ -18,3 +18,58 @@
     },
   },
 }
+
+
+
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "myserver/qwen",
+  "providers": {
+    "myserver": {
+      "name": "My Private AI Server",
+      "package": "@opencode/ai/providers/openai-compatible",
+      "settings": {
+        "baseURL": "http://26.124.228.188:1234/v1",
+        "apiKey": "sk-lm-QLAagmfF:bptwTce2AA8V0JrXMLRB"
+      },
+      "models": {
+        "qwen": {
+          "name": "Qwen 3.8 27B",
+          "modelID": "qwen/qwen3.8-27b"
+        },
+        "muse": {
+          "name": "Meta Muse Glimmer",
+          "modelID": "meta/muse-glimmer"
+        }
+      }
+    },
+    "Qwen9B_LLM": {
+      "name": "Qwen9B_LLM",
+      "package": "@opencode/ai/providers/openai-compatible",
+      "settings": {
+        "baseURL": "http://26.215.30.163:1234/v1",
+        "apiKey": "sk-lm-ymGJE2gr:lScQk8zKVLydJf1QuKw7"
+      },
+      "models": {
+        "qwen": {
+          "name": "qwen qwen3.5 9b",
+          "modelID": "qwen/qwen3.5-9b"
+        }
+      }
+    },
+    "S003_LLM": {
+      "name": "Inkling 2 Mini API",
+      "package": "@opencode/ai/providers/openai-compatible",
+      "settings": {
+        "baseURL": "http://26.38.4.159:18080/v1",
+        "apiKey": "sk-inkling-nk2oEcSGmWQYhtOzdqjtldOj0Kvs8-G1h33wwMZ6zCI"
+      },
+      "models": {
+        "inkling-2-mini": {
+          "name": "Inkling 2 Mini UD 26B",
+          "modelID": "Inkling-2-Mini-UD-IQ1_M.gguf"
+        }
+      }
+    }
+  }
+}
