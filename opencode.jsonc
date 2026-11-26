@@ -1,73 +1,249 @@
 {
+  // OpenCode 設定檔的 Schema，通常不需要修改
   "$schema": "https://opencode.ai/config.json",
-  "model": "lmstudio/qwen3.5-9b",
+
+  // 預設使用的模型
+  // 格式：Provider名稱/模型代號
+  // 日常用 9B（快）；要更聰明可切到 RAM_64GB/inkling2mini
+  "model": "VRAM_11GB/qwen",
+
+  // AI 伺服器設定區域
   "providers": {
-    "lmstudio": {
-      "name": "LM Studio (100.80.0.5)",
+
+    // ==============================
+    // 第一台 AI 伺服器，可以自由修改
+    // ==============================
+    "VRAM_32GB": {
+
+      // 伺服器顯示名稱，可以自行修改
+      "name": "VRAM_32GB",
+
+      // 使用 OpenAI 相容 API 驅動
+      // 如果伺服器支援 OpenAI API 格式，通常使用這個
       "package": "@opencode/ai/providers/openai-compatible",
+
+      // 伺服器連線設定
       "settings": {
-        "baseURL": "http://100.80.0.5:1234/v1",
-        "apiKey": "sk-lm-ymGJE2gr:lScQk8zKVLydJf1QuKw7",
-      },
-      "models": {
-        "qwen3.5-9b": {
-          "modelID": "qwen/qwen3.5-9b",
-          "name": "Qwen 3.5 9B",
-        },
-      },
-    },
-  },
-}
 
-
-
-{
-  "$schema": "https://opencode.ai/config.json",
-  "model": "myserver/qwen",
-  "providers": {
-    "myserver": {
-      "name": "My Private AI Server",
-      "package": "@opencode/ai/providers/openai-compatible",
-      "settings": {
+        // AI 伺服器 API 網址
+        // 格式：http://IP:PORT/v1
+        // 修改成實際伺服器的 IP、Port 和 API 路徑
         "baseURL": "http://26.124.228.188:1234/v1",
-        "apiKey": "sk-lm-QLAagmfF:bptwTce2AA8V0JrXMLRB"
+
+        // API 驗證金鑰
+        // 填寫伺服器所要求的 API Key
+        "apiKey": "sk-lm-QLAagmfF:bptwTce2AA8V0JrXMLRB",
+
+        // 這台很快（實測生成約 96 tok/s），逾時維持寬鬆即可
+        "headerTimeout": 300000,
+        "chunkTimeout": 300000,
+        "timeout": 900000
       },
+
+      // 這台伺服器提供的模型清單
       "models": {
+
+        // 模型代號，可以自由修改
         "qwen": {
+
+          // 模型顯示名稱，可以自由修改
           "name": "Qwen 3.8 27B",
-          "modelID": "qwen/qwen3.8-27b"
-        },
-        "muse": {
-          "name": "Meta Muse Glimmer",
-          "modelID": "meta/muse-glimmer"
+
+          // 實際模型 ID，必須與伺服器支援的名稱一致
+          "modelID": "qwen/qwen3.8-27b",
+
+          // 預設關閉思考（最快）。需要時在選單選 None/Minimal/Low/...
+          "body": {
+            "reasoning_effort": "none"
+          },
+
+          // 推理內容放在 reasoning_content 欄位（LM Studio 的格式）
+          "compatibility": {
+            "reasoningField": "reasoning_content"
+          },
+
+          // 能力宣告：這顆模型有針對工具呼叫訓練，且支援圖片輸入
+          "capabilities": {
+            "tools": true,
+            "input": ["text", "image"],
+            "output": ["text"]
+          },
+
+          // LM Studio 這顆模型支援的 reasoning_effort（實測）：
+          //   none / minimal / low / medium / high / xhigh
+          // 不支援：max、auto、off、on（會回 400）
+          // 選單中的「Default」= 不帶後綴的 qwen = none（關閉思考）。
+          "variants": [
+            { "id": "none", "body": { "reasoning_effort": "none" } },
+            { "id": "minimal", "body": { "reasoning_effort": "minimal" } },
+            { "id": "low", "body": { "reasoning_effort": "low" } },
+            { "id": "medium", "body": { "reasoning_effort": "medium" } },
+            { "id": "high", "body": { "reasoning_effort": "high" } },
+            { "id": "xhigh", "body": { "reasoning_effort": "xhigh" } }
+          ],
+
+          // LM Studio 目前載入的 context 是 125184
+          // 這裡用 114688 + 8192 = 122880，留約 2.3k 邊界
+          "limit": {
+            "context": 114688,
+            "output": 8192
+          }
         }
       }
     },
-    "Qwen9B_LLM": {
-      "name": "Qwen9B_LLM",
+
+    // ==============================
+    // 第二台 AI 伺服器，可以自由修改
+    // ==============================
+    "VRAM_11GB": {
+
+      // 伺服器顯示名稱，可以自由修改
+      "name": "VRAM_11GB",
+
+      // OpenAI 相容 API 驅動
       "package": "@opencode/ai/providers/openai-compatible",
+
+      // 伺服器連線設定
       "settings": {
+
+        // 第二台伺服器的 API 網址
         "baseURL": "http://26.215.30.163:1234/v1",
-        "apiKey": "sk-lm-ymGJE2gr:lScQk8zKVLydJf1QuKw7"
+
+        // 第二台伺服器的 API Key
+        "apiKey": "sk-lm-ymGJE2gr:lScQk8zKVLydJf1QuKw7",
+
+        // 這台很快，但模型閒置後重新載入（約 6GB）需要一點時間
+        // 等回應標頭最多 5 分鐘
+        "headerTimeout": 300000,
+
+        // 串流片段之間最多 5 分鐘
+        "chunkTimeout": 300000,
+
+        // 單次請求總上限 15 分鐘（保險用）
+        "timeout": 900000
       },
+
+      // 模型清單
       "models": {
+
+        // 模型代號，可以自由修改
         "qwen": {
-          "name": "qwen qwen3.5 9b",
-          "modelID": "qwen/qwen3.5-9b"
+
+          // 模型顯示名稱，可以自由修改
+          "name": "Qwen 3.5 9B",
+
+          // 實際模型 ID，必須與伺服器支援的名稱一致
+          "modelID": "qwen/qwen3.5-9b",
+
+          // 預設關閉思考（最快，實測約 10 秒回覆）。
+          // 需要更聰明時在 /models 選 #think 或 #deep。
+          // 用 body 直接送 reasoning_effort，避免套件把值過濾掉。
+          "body": {
+            "reasoning_effort": "none"
+          },
+
+          // 推理內容放在 reasoning_content 欄位（LM Studio 的格式）
+          "compatibility": {
+            "reasoningField": "reasoning_content"
+          },
+
+          // 能力宣告：這顆模型有針對工具呼叫訓練，且支援圖片輸入
+          "capabilities": {
+            "tools": true,
+            "input": ["text", "image"],
+            "output": ["text"]
+          },
+
+          // LM Studio 這顆模型支援的 reasoning_effort（實測）：
+          //   none / minimal / low / medium / high / xhigh
+          // 不支援：max、auto、off、on（會回 400）
+          // 選單中的「Default」= 不帶後綴的 qwen = none（關閉思考）。
+          "variants": [
+            { "id": "none", "body": { "reasoning_effort": "none" } },
+            { "id": "minimal", "body": { "reasoning_effort": "minimal" } },
+            { "id": "low", "body": { "reasoning_effort": "low" } },
+            { "id": "medium", "body": { "reasoning_effort": "medium" } },
+            { "id": "high", "body": { "reasoning_effort": "high" } },
+            { "id": "xhigh", "body": { "reasoning_effort": "xhigh" } }
+          ],
+
+          // LM Studio 目前載入的 context 是 100096
+          // 這裡用 81920 + 8192 = 90112，留約 10k 安全邊界
+          "limit": {
+            "context": 81920,
+            "output": 8192
+          }
         }
       }
     },
-    "S003_LLM": {
-      "name": "Inkling 2 Mini API",
+
+    // ==============================
+    // 第三台 AI 伺服器，可以自由修改
+    // ==============================
+    "RAM_64GB": {
+
+      // 伺服器顯示名稱，可以自由修改
+      "name": "RAM_64GB",
+
+      // OpenAI 相容 API 驅動
       "package": "@opencode/ai/providers/openai-compatible",
+
+      // 伺服器連線設定
       "settings": {
-        "baseURL": "http://26.38.4.159:18080/v1",
-        "apiKey": "sk-inkling-nk2oEcSGmWQYhtOzdqjtldOj0Kvs8-G1h33wwMZ6zCI"
+
+        // API 網址
+        "baseURL": "http://26.155.129.233:1234/v1",
+
+        // API Key
+        "apiKey": "sk-lm-JmjlqVYb:TbDx0zmK2qSlTUZCKT2U",
+
+        // 這台很慢，把逾時放寬，避免等到一半被判定失敗
+        // 等回應標頭（含排隊、載入模型、prompt 處理）最多 10 分鐘
+        "headerTimeout": 600000,
+
+        // 串流兩個片段之間最多等 10 分鐘
+        "chunkTimeout": 600000,
+
+        // 整個請求的總時限放寬到 1 小時（慢速機器用）
+        "timeout": 3600000
       },
+
+      // 模型清單
       "models": {
-        "inkling-2-mini": {
-          "name": "Inkling 2 Mini UD 26B",
-          "modelID": "Inkling-2-Mini-UD-IQ1_M.gguf"
+
+        // 模型代號，可以自由修改
+        "inkling2mini": {
+
+          // 模型顯示名稱，可以自由修改
+          "name": "inkling-2-mini",
+
+          // 實際模型 ID，必須與伺服器支援的名稱一致
+          "modelID": "thinkingmachines/inkling-2-mini",
+
+          // 這是推理模型，LM Studio 預設 effort = high，會想非常久。
+          // 實測 low 明顯快很多，先用 low；要更聰明可在 /models 選 #high。
+          "settings": {
+            "reasoningEffort": "low"
+          },
+
+          // 推理內容放在 reasoning_content 欄位（LM Studio 的格式）
+          "compatibility": {
+            "reasoningField": "reasoning_content"
+          },
+
+          // 能力宣告：支援工具呼叫、文字與圖片輸入
+          "capabilities": {
+            "tools": true,
+            "input": ["text", "image"],
+            "output": ["text"]
+          },
+
+          // 重要：這裡必須等於 LM Studio 實際載入的 context_length。
+          // LM Studio 已載入 65536，這裡設 61440（留 4096 給輸出）。
+          "limit": {
+            "context": 61440,
+            "output": 4096
+          }
         }
       }
     }
